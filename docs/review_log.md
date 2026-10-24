@@ -8,3 +8,4 @@ authorship").
 |---|---|---|---|
 | Plan | Chose the three structures (binomial, Fibonacci, pairing heaps) and Dijkstra as the application; chose the authorship split; approved the phase plan. | — | — |
 | 0. Repository setup | Checked the pinned requirements and the plan; approved. | — | — |
+| 1. Theory notes | Reviewed `docs/theory.md` line by line; approved. | — | — |
