@@ -10,8 +10,16 @@ AI-assisted: generated with Claude Code; reviewed and tested by Ahmed Elgazwy (s
 from mergeable_heaps.base import Handle, MergeableHeap
 from mergeable_heaps.binomial_heap import BinomialHeap
 from mergeable_heaps.fibonacci_heap import FibonacciHeap
+from mergeable_heaps.pairing_heap import PairingHeap
 
-#: Every heap implementation, in display order (filled in as the heaps are added).
-HEAP_CLASSES: tuple[type[MergeableHeap], ...] = (BinomialHeap, FibonacciHeap)
+#: Every heap implementation, in display order.
+HEAP_CLASSES: tuple[type[MergeableHeap], ...] = (BinomialHeap, FibonacciHeap, PairingHeap)
 
-__all__ = ["HEAP_CLASSES", "BinomialHeap", "FibonacciHeap", "Handle", "MergeableHeap"]
+__all__ = [
+    "HEAP_CLASSES",
+    "BinomialHeap",
+    "FibonacciHeap",
+    "Handle",
+    "MergeableHeap",
+    "PairingHeap",
+]

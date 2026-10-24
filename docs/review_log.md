@@ -12,3 +12,4 @@ authorship").
 | 2. Interface and contract tests | Reviewed the interface, the reference heap and the contract tests; approved, including the stale-handle `ValueError` rule. | — | — |
 | 3. Binomial heap | Reviewed the binomial heap, its tests, the bug-injection results and the 1M-item timings; approved. | — | — |
 | 4. Fibonacci heap | Reviewed the Fibonacci heap (including the exact integer degree bound) and its tests; approved. | — | Ran the Phase 4 tests. |
+| 5. Pairing heap | Reviewed the pairing heap and its tests, and the two corrected test expectations; approved. Agreed that Phase 9 must use fixed key orders for the first extract-min and Dijkstra-like decrease-keys (new key between the current minimum and the old key). | — | Ran the Phase 5 tests. |
