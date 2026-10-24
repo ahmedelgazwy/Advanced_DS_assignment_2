@@ -14,3 +14,4 @@ authorship").
 | 4. Fibonacci heap | Reviewed the Fibonacci heap (including the exact integer degree bound) and its tests; approved. | — | Ran the Phase 4 tests. |
 | 5. Pairing heap | Reviewed the pairing heap and its tests, and the two corrected test expectations; approved. Agreed that Phase 9 must use fixed key orders for the first extract-min and Dijkstra-like decrease-keys (new key between the current minimum and the old key). | — | Ran the Phase 5 tests. |
 | 6. Datasets | Reviewed the key and graph datasets, the file formats and the checksum verification; approved. Created the GitHub repository and published the dataset as release `dataset-v1`. | — | — |
+| 7. Dijkstra | Reviewed Dijkstra, its tests and the full-graph results (Fibonacci slowest, about 1M decrease-keys for 10M edges); approved. | — | Ran the Phase 7 tests. |
