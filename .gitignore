@@ -1,0 +1,31 @@
+# Assignment handout (copyrighted, not for redistribution)
+COSC 520*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Generated datasets (published as a GitHub release, see data/README.md)
+data/*.gz
+data/*.txt
+
+# Output of the --quick benchmark (the full results are committed)
+results/quick/
+
+# Overleaf upload bundle and LaTeX build files
+*.zip
+report/*.aux
+report/*.bbl
+report/*.blg
+report/*.log
+report/*.out
+report/*.fls
+report/*.fdb_latexmk
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
