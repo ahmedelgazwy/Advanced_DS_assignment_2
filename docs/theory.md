@@ -293,7 +293,7 @@ counts (experiment E7).
 | **Handle design (binomial).** Each binomial node points to an *item* (key, value, node back-pointer). `decrease_key` swaps *items* between nodes and updates the back-pointers. | CLRS's bubble-up swaps the stored keys and data, so a handle held by the caller would silently start pointing at another item. Swapping items keeps every handle valid; the cost is one extra object per item. |
 | **Min pointer in the binomial heap** | `find_min` becomes $O(1)$, which matches the other two heaps and makes the comparison fair. |
 | **Two-pass pairing** (not multipass or auxiliary two-pass) | The variant analysed by FSST 1986, Iacono 2000 and Pettie 2005, and the most widely used. |
-| **Fibonacci degree table of $\lfloor\log_\varphi n\rfloor + 2$ entries** | §2.4 bound plus one spare. |
+| **Fibonacci degree table of $D(n) + 2$ entries**, with $D(n) = \max\{k : F_{k+2} \le n\} \le \lfloor\log_\varphi n\rfloor$ computed in integer arithmetic | §2.4 bound plus one spare (35 entries at $n = 10^7$). Integer arithmetic avoids the floating-point rounding of $\log_\varphi n$, which can be off by one when $n$ is within $10^{-15}$ relative of $\varphi^k$. |
 | **Iterative code only** (no recursion) | Python's default recursion limit is 1000. A pairing heap after $n$ sorted inserts, or a heap-order chain, has depth or width up to $n$. |
 | **Native `delete`** rather than "decrease to $-\infty$, then extract" | Keys can be any comparable type, so there is no universal $-\infty$. |
 | **`__slots__` on every node class** | Removes the per-object `__dict__`, roughly halving memory. A 5-field node takes 72 bytes instead of 48 + 104 (dict) = 152 bytes (§7). |

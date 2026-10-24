@@ -11,3 +11,4 @@ authorship").
 | 1. Theory notes | Reviewed `docs/theory.md` line by line; approved. | — | — |
 | 2. Interface and contract tests | Reviewed the interface, the reference heap and the contract tests; approved, including the stale-handle `ValueError` rule. | — | — |
 | 3. Binomial heap | Reviewed the binomial heap, its tests, the bug-injection results and the 1M-item timings; approved. | — | — |
+| 4. Fibonacci heap | Reviewed the Fibonacci heap (including the exact integer degree bound) and its tests; approved. | — | Ran the Phase 4 tests. |

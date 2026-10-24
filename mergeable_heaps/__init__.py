@@ -9,8 +9,9 @@ AI-assisted: generated with Claude Code; reviewed and tested by Ahmed Elgazwy (s
 
 from mergeable_heaps.base import Handle, MergeableHeap
 from mergeable_heaps.binomial_heap import BinomialHeap
+from mergeable_heaps.fibonacci_heap import FibonacciHeap
 
 #: Every heap implementation, in display order (filled in as the heaps are added).
-HEAP_CLASSES: tuple[type[MergeableHeap], ...] = (BinomialHeap,)
+HEAP_CLASSES: tuple[type[MergeableHeap], ...] = (BinomialHeap, FibonacciHeap)
 
-__all__ = ["HEAP_CLASSES", "BinomialHeap", "Handle", "MergeableHeap"]
+__all__ = ["HEAP_CLASSES", "BinomialHeap", "FibonacciHeap", "Handle", "MergeableHeap"]
