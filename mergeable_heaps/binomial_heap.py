@@ -303,12 +303,7 @@ class BinomialHeap(MergeableHeap):
         Returns:
             List of degrees; they are the positions of the 1-bits of ``len(self)``.
         """
-        degrees = []
-        root = self._head
-        while root is not None:
-            degrees.append(root.degree)
-            root = root.sibling
-        return degrees
+        return [root.degree for root in self._roots()]
 
     def check_invariants(self) -> None:
         """Verify the binomial-heap invariants. O(n).
@@ -364,24 +359,41 @@ class BinomialHeap(MergeableHeap):
         """
         return sys.getsizeof(node) + sys.getsizeof(node.item) + sys.getsizeof(node.item.key)
 
-    def _iter_nodes(self) -> Iterator[BinomialNode]:
-        """Yield every node once (depth-first, with an explicit stack).
+    def _roots(self) -> Iterator[BinomialNode]:
+        """Yield the roots in root-list order (increasing degree).
 
         Returns:
-            Iterator over all nodes of all trees.
+            Iterator over the roots.
         """
-        stack = []
         root = self._head
         while root is not None:
-            stack.append(root)
+            yield root
             root = root.sibling
-        while stack:
-            node = stack.pop()
-            yield node
-            child = node.child
-            while child is not None:
-                stack.append(child)
-                child = child.sibling
+
+    def _children(self, node: BinomialNode) -> Iterator[BinomialNode]:
+        """Yield a node's children, highest order first.
+
+        Args:
+            node: A node of this heap.
+
+        Returns:
+            Iterator over the children.
+        """
+        child = node.child
+        while child is not None:
+            yield child
+            child = child.sibling
+
+    def _handle_of(self, node: BinomialNode) -> BinomialItem:
+        """The item stored at a node, which is the caller's handle.
+
+        Args:
+            node: A node of this heap.
+
+        Returns:
+            The node's item.
+        """
+        return node.item
 
     def _find_min_root(self) -> Optional[BinomialNode]:
         """Scan the root list for the smallest key. O(log n).

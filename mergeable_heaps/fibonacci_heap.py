@@ -284,9 +284,7 @@ class FibonacciHeap(MergeableHeap):
         Returns:
             List of degrees (empty for an empty heap).
         """
-        if self._min is None:
-            return []
-        return [root.degree for root in _siblings(self._min)]
+        return [root.degree for root in self._roots()]
 
     def check_invariants(self) -> None:
         """Verify the Fibonacci-heap invariants. O(n).
@@ -328,20 +326,24 @@ class FibonacciHeap(MergeableHeap):
             assert children == node.degree, "degree does not match the number of children"
         assert count == self._size, "node count differs from the stored size"
 
-    def _iter_nodes(self) -> Iterator[FibonacciNode]:
-        """Yield every node once (depth-first, with an explicit stack).
+    def _roots(self) -> Iterator[FibonacciNode]:
+        """Yield the roots in root-list order, starting at the minimum.
 
         Returns:
-            Iterator over all nodes of all trees.
+            Iterator over the roots.
         """
-        if self._min is None:
-            return
-        stack = list(_siblings(self._min))
-        while stack:
-            node = stack.pop()
-            yield node
-            if node.child is not None:
-                stack.extend(_siblings(node.child))
+        return _siblings(self._min) if self._min is not None else iter(())
+
+    def _children(self, node: FibonacciNode) -> Iterator[FibonacciNode]:
+        """Yield a node's children in sibling-list order.
+
+        Args:
+            node: A node of this heap.
+
+        Returns:
+            Iterator over the children.
+        """
+        return _siblings(node.child) if node.child is not None else iter(())
 
     def _bounded_siblings(self, start: FibonacciNode) -> Iterator[FibonacciNode]:
         """Like :func:`_siblings`, but fail instead of looping on a broken list.

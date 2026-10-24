@@ -98,9 +98,13 @@ class ReferenceHeap(MergeableHeap):
         """Entries and keys plus the list itself. See :meth:`MergeableHeap.memory_bytes`."""
         return super().memory_bytes() + sys.getsizeof(self._entries)
 
-    def _iter_nodes(self) -> Iterator[ReferenceEntry]:
-        """Yield every entry. See :meth:`MergeableHeap._iter_nodes`."""
+    def _roots(self) -> Iterator[ReferenceEntry]:
+        """Every entry is a one-node tree. See :meth:`MergeableHeap._roots`."""
         return iter(self._entries)
+
+    def _children(self, node: ReferenceEntry) -> Iterator[ReferenceEntry]:
+        """Entries have no children. See :meth:`MergeableHeap._children`."""
+        return iter(())
 
     def _remove(self, entry: ReferenceEntry) -> None:
         """Take an entry out of the list and mark it removed.

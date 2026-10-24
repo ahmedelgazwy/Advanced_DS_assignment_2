@@ -149,12 +149,77 @@ class MergeableHeap(ABC):
         """
 
     @abstractmethod
+    def _roots(self) -> Iterator[Any]:
+        """Yield the root of every tree of the heap.
+
+        Returns:
+            Iterator over the root nodes (empty for an empty heap).
+        """
+
+    @abstractmethod
+    def _children(self, node: Any) -> Iterator[Any]:
+        """Yield the children of one node.
+
+        Args:
+            node: A node of this heap.
+
+        Returns:
+            Iterator over the node's children (empty for a leaf).
+        """
+
+    def _handle_of(self, node: Any) -> Handle:
+        """The caller-visible handle stored at a node (the node itself by default).
+
+        Args:
+            node: A node of this heap.
+
+        Returns:
+            The handle, which exposes ``key`` and ``value``.
+        """
+        return node
+
     def _iter_nodes(self) -> Iterator[Any]:
-        """Yield every node of the heap exactly once, without recursion.
+        """Yield every node of the heap exactly once (depth-first, explicit stack).
 
         Returns:
             Iterator over the node objects (one per item).
         """
+        stack = list(self._roots())
+        while stack:
+            node = stack.pop()
+            yield node
+            stack.extend(self._children(node))
+
+    def tree_count(self) -> int:
+        """Number of trees in the heap (1 for a non-empty pairing heap).
+
+        Returns:
+            Number of roots.
+        """
+        return sum(1 for _ in self._roots())
+
+    def format_trees(self, max_nodes: int = 64) -> str:
+        """Draw the heap's trees as an indented outline of keys.
+
+        Each line is one node; a child is indented two spaces more than its
+        parent; trees appear in root-list order.
+
+        Args:
+            max_nodes: Draw at most this many nodes.
+
+        Returns:
+            Multi-line string (empty for an empty heap); if nodes were left
+            out, the last line says how many.
+        """
+        lines: list[str] = []
+        stack = [(root, 0) for root in reversed(list(self._roots()))]
+        while stack and len(lines) < max_nodes:
+            node, depth = stack.pop()
+            lines.append("  " * depth + repr(self._handle_of(node).key))
+            stack.extend((child, depth + 1) for child in reversed(list(self._children(node))))
+        if len(lines) < len(self):
+            lines.append(f"... ({len(self) - len(lines)} more nodes)")
+        return "\n".join(lines)
 
     def _node_bytes(self, node: Any) -> int:
         """Bytes owned by one node: the node object itself and its key.

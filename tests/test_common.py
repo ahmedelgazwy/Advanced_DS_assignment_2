@@ -464,6 +464,32 @@ def test_every_item_has_exactly_one_node(make_heap, random_keys):
     assert len({id(node) for node in nodes}) == len(nodes)
 
 
+def test_tree_count_matches_the_roots(make_heap, random_keys):
+    heap, _ = filled(make_heap, random_keys[:100])
+    heap.extract_min()
+    assert heap.tree_count() == len(list(heap._roots())) >= 1
+    assert make_heap().tree_count() == 0
+
+
+def test_format_trees_draws_every_key_once(make_heap):
+    heap, _ = filled(make_heap, [5, 3, 8, 1, 9, 2])
+    heap.extract_min()
+    lines = heap.format_trees().splitlines()
+    assert sorted(int(line) for line in lines) == [2, 3, 5, 8, 9]
+    assert sum(not line.startswith(" ") for line in lines) == heap.tree_count()
+
+
+def test_format_trees_truncates_large_heaps(make_heap):
+    heap, _ = filled(make_heap, list(range(100)))
+    lines = heap.format_trees(max_nodes=10).splitlines()
+    assert len(lines) == 11
+    assert lines[-1] == "... (90 more nodes)"
+
+
+def test_format_trees_of_an_empty_heap_is_empty(make_heap):
+    assert make_heap().format_trees() == ""
+
+
 # --- Stress (real heaps only: the O(n) reference heap is too slow) ------------------------
 
 

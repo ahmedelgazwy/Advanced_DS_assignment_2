@@ -65,6 +65,13 @@ def test_thirteen_items_form_b0_b2_b3():
     assert heap.root_degrees() == [0, 2, 3]
 
 
+def test_four_items_form_one_b2_drawn_as_an_outline():
+    """0 and 1 link into B_1(0); 2 and 3 into B_1(2); the two B_1 link below 0."""
+    heap = BinomialHeap()
+    heap.insert_all(range(4))
+    assert heap.format_trees() == "0\n  2\n    3\n  1"
+
+
 def test_inserting_into_two_to_the_j_minus_one_items_carries_into_one_tree():
     heap = BinomialHeap()
     heap.insert_all(range(15))  # 0b1111: B_0, B_1, B_2, B_3

@@ -243,12 +243,7 @@ class PairingHeap(MergeableHeap):
             Length of the root's child list; this is the work the next
             extract_min must do.
         """
-        count = 0
-        child = self._root.child if self._root is not None else None
-        while child is not None:
-            count += 1
-            child = child.next
-        return count
+        return sum(1 for _ in self._children(self._root)) if self._root is not None else 0
 
     def check_invariants(self) -> None:
         """Verify the pairing-heap invariants. O(n).
@@ -285,20 +280,28 @@ class PairingHeap(MergeableHeap):
                 previous, child = child, child.next
         assert count == self._size, "node count differs from the stored size"
 
-    def _iter_nodes(self) -> Iterator[PairingNode]:
-        """Yield every node once (depth-first, with an explicit stack).
+    def _roots(self) -> Iterator[PairingNode]:
+        """Yield the single root (nothing for an empty heap).
 
         Returns:
-            Iterator over all nodes of the tree.
+            Iterator over at most one node.
         """
-        stack = [self._root] if self._root is not None else []
-        while stack:
-            node = stack.pop()
-            yield node
-            child = node.child
-            while child is not None:
-                stack.append(child)
-                child = child.next
+        if self._root is not None:
+            yield self._root
+
+    def _children(self, node: PairingNode) -> Iterator[PairingNode]:
+        """Yield a node's children, leftmost first.
+
+        Args:
+            node: A node of this heap.
+
+        Returns:
+            Iterator over the children.
+        """
+        child = node.child
+        while child is not None:
+            yield child
+            child = child.next
 
     @staticmethod
     def _detach(node: PairingNode) -> None:
