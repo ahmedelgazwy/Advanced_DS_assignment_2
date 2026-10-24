@@ -1,0 +1,28 @@
+{
+  "description": "Synthetic datasets for the COSC 520 mergeable-heap benchmark",
+  "keys": {
+    "file": "keys_10000000.txt.gz",
+    "count": 10000000,
+    "seed": 42,
+    "format": "gzip-compressed text, one integer per line",
+    "distribution": "uniform integers in [0, 2^31)"
+  },
+  "graph": {
+    "file": "graph_1000000_10000000.txt.gz",
+    "vertices": 1000000,
+    "edges": 10000000,
+    "seed": 7,
+    "source": 0,
+    "format": "gzip-compressed text: header '# vertices=V edges=E', then one 'source target weight' line per edge, grouped by source",
+    "construction": "random Hamiltonian path from vertex 0 (V - 1 edges) plus uniformly random edges between distinct vertices",
+    "weights": "uniform integers in [1, 1000]"
+  },
+  "sha256": {
+    "keys_10000000.txt.gz": "491839153a167dc6ebf946f2d6690bc348a9529d8c19586db44ae23e41ed2a4d",
+    "graph_1000000_10000000.txt.gz": "cbe6d5b29a36468b80f33277e0783b4eb48d6dc9f5fdefa9ea05034e17e6b552"
+  },
+  "bytes": {
+    "keys_10000000.txt.gz": 49869516,
+    "graph_1000000_10000000.txt.gz": 68757702
+  }
+}

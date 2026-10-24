@@ -13,3 +13,4 @@ authorship").
 | 3. Binomial heap | Reviewed the binomial heap, its tests, the bug-injection results and the 1M-item timings; approved. | — | — |
 | 4. Fibonacci heap | Reviewed the Fibonacci heap (including the exact integer degree bound) and its tests; approved. | — | Ran the Phase 4 tests. |
 | 5. Pairing heap | Reviewed the pairing heap and its tests, and the two corrected test expectations; approved. Agreed that Phase 9 must use fixed key orders for the first extract-min and Dijkstra-like decrease-keys (new key between the current minimum and the old key). | — | Ran the Phase 5 tests. |
+| 6. Datasets | Reviewed the key and graph datasets, the file formats and the checksum verification; approved. Created the GitHub repository and published the dataset as release `dataset-v1`. | — | — |
