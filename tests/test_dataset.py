@@ -20,6 +20,7 @@ from mergeable_heaps.dataset import (
     generate_keys,
     load_graph,
     load_keys,
+    load_or_generate_graph,
     load_or_generate_keys,
     save_graph,
     save_keys,
@@ -170,6 +171,18 @@ def test_edgeless_graph_round_trips(tmp_path):
     path = tmp_path / "single.txt"
     save_graph(path, generate_graph(1, 0))
     assert load_graph(path).num_vertices == 1
+
+
+def test_load_or_generate_graph_uses_the_file_only_if_the_size_matches(tmp_path):
+    path = tmp_path / "graph.txt.gz"
+    expected = edge_list(generate_graph(40, 300))
+    graph, from_file = load_or_generate_graph(path, 40, 300)  # missing file
+    assert (edge_list(graph), from_file) == (expected, False)
+    save_graph(path, generate_graph(40, 300))
+    graph, from_file = load_or_generate_graph(path, 40, 300)
+    assert (edge_list(graph), from_file) == (expected, True)
+    graph, from_file = load_or_generate_graph(path, 50, 300)  # wrong size: generated
+    assert (graph.num_vertices, from_file) == (50, False)
 
 
 def test_graph_file_without_header_is_rejected(tmp_path):

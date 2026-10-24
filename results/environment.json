@@ -1,0 +1,15 @@
+{
+  "date_utc": "2026-10-24T03:04:19+00:00",
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+  "logical_cpus": 16,
+  "ram_bytes": 17179869184,
+  "os": "Windows-10-10.0.26200-SP0",
+  "python": "3.10.2",
+  "max_n": 10000000,
+  "order_max_n": 10000000,
+  "dijkstra_max_v": 1000000,
+  "repeats": 3,
+  "max_batch": 100000,
+  "single_run_above": 1000000,
+  "edges_per_vertex": 10
+}

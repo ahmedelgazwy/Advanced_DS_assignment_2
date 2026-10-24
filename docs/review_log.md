@@ -16,3 +16,4 @@ authorship").
 | 6. Datasets | Reviewed the key and graph datasets, the file formats and the checksum verification; approved. Created the GitHub repository and published the dataset as release `dataset-v1`. | — | — |
 | 7. Dijkstra | Reviewed Dijkstra, its tests and the full-graph results (Fibonacci slowest, about 1M decrease-keys for 10M edges); approved. | — | Ran the Phase 7 tests. |
 | 8. Demo | Reviewed the demo, the traversal refactor of the three heaps (`_roots`/`_children`, `tree_count`, `format_trees`) and the two measurement fixes (pairing warm-up timed separately; cold-cache merge explained); approved. | — | Ran the demo and the Phase 8 tests. |
+| 9. Benchmarks and figures | Reviewed the benchmark design, the full-run results against hypotheses H1–H7 and the figures; approved. | — | — |

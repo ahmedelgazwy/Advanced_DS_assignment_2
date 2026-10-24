@@ -305,11 +305,7 @@ def load_graph(path: str | Path) -> Graph:
         ValueError: If the header is missing or the edge count does not match it.
     """
     with _open_text(Path(path), "r") as handle:
-        header = handle.readline().split()
-        if len(header) != 3 or header[0] != "#":
-            raise ValueError(f"{path}: missing '# vertices=V edges=E' header")
-        num_vertices = int(header[1].removeprefix("vertices="))
-        num_edges = int(header[2].removeprefix("edges="))
+        num_vertices, num_edges = _parse_graph_header(handle.readline(), path)
         if num_edges:
             columns = np.loadtxt(handle, dtype=np.int64, ndmin=2)
         else:
@@ -335,6 +331,49 @@ def load_or_generate_keys(path: str | Path, count: int) -> tuple[list[int], bool
         if len(keys) == count:
             return keys, True
     return generate_keys(count), False
+
+
+def _parse_graph_header(line: str, path: str | Path) -> tuple[int, int]:
+    """Parse the ``# vertices=V edges=E`` header line of a graph file.
+
+    Args:
+        line: First line of the file.
+        path: File name, for the error message.
+
+    Returns:
+        Tuple ``(V, E)``.
+
+    Raises:
+        ValueError: If the line is not a valid header.
+    """
+    parts = line.split()
+    if len(parts) != 3 or parts[0] != "#":
+        raise ValueError(f"{path}: missing '# vertices=V edges=E' header")
+    return int(parts[1].removeprefix("vertices=")), int(parts[2].removeprefix("edges="))
+
+
+def load_or_generate_graph(
+    path: str | Path, num_vertices: int, num_edges: int
+) -> tuple[Graph, bool]:
+    """Read the graph file if it has the requested size, otherwise generate the same graph.
+
+    Only the header is read to check the size, so a mismatching file costs nothing.
+
+    Args:
+        path: Graph file (see data/README.md).
+        num_vertices: Number of vertices V.
+        num_edges: Number of edges E.
+
+    Returns:
+        Tuple ``(graph, read_from_file)``.
+    """
+    path = Path(path)
+    if path.exists():
+        with _open_text(path, "r") as handle:
+            size = _parse_graph_header(handle.readline(), path)
+        if size == (num_vertices, num_edges):
+            return load_graph(path), True
+    return generate_graph(num_vertices, num_edges), False
 
 
 def sha256_of(path: str | Path) -> str:
